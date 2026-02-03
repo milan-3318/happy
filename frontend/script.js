@@ -1,13 +1,20 @@
 /* ===============================
-   CINEMATIC INTRO SCROLL LOCK
+   DEVICE CHECK
 ================================ */
-document.body.style.overflow = "hidden";
-setTimeout(() => {
-  document.body.style.overflow = "auto";
-}, 5000);
+const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
 /* ===============================
-   REVEAL ON SCROLL
+   CINEMATIC INTRO (DESKTOP ONLY)
+================================ */
+if (!isMobile) {
+  document.body.style.overflow = "hidden";
+  setTimeout(() => {
+    document.body.style.overflow = "auto";
+  }, 5000);
+}
+
+/* ===============================
+   REVEAL ON SCROLL (ADAPTIVE)
 ================================ */
 const reveals = document.querySelectorAll(".reveal");
 
@@ -19,25 +26,29 @@ const observer = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.15 }
+  {
+    threshold: isMobile ? 0.05 : 0.15
+  }
 );
 
 reveals.forEach(el => observer.observe(el));
 
 /* ===============================
-   MOUSE PARALLAX (UNCHANGED)
+   PARALLAX (DESKTOP ONLY)
 ================================ */
-document.addEventListener("mousemove", e => {
-  const x = (window.innerWidth / 2 - e.clientX) / 60;
-  const y = (window.innerHeight / 2 - e.clientY) / 60;
+if (!isMobile) {
+  document.addEventListener("mousemove", e => {
+    const x = (window.innerWidth / 2 - e.clientX) / 60;
+    const y = (window.innerHeight / 2 - e.clientY) / 60;
 
-  document.querySelectorAll(".card, .skills span").forEach(el => {
-    el.style.transform = `translate(${x}px, ${y}px)`;
+    document.querySelectorAll(".card, .skills span").forEach(el => {
+      el.style.transform = `translate(${x}px, ${y}px)`;
+    });
   });
-});
+}
 
 /* ===============================
-   SUGGESTION FORM (FIXED)
+   SUGGESTION FORM (ISOLATED)
 ================================ */
 const form = document.getElementById("suggestionForm");
 
@@ -50,7 +61,7 @@ if (form) {
     const message = form.querySelector("textarea").value.trim();
 
     if (!name || !email || !message) {
-      alert("Fill all fields");
+      alert("Please fill all fields");
       return;
     }
 
@@ -66,7 +77,9 @@ if (form) {
         }
       );
 
-      if (!res.ok) throw new Error("Server error");
+      if (!res.ok) {
+        throw new Error("Server error");
+      }
 
       alert("Suggestion sent 🚀");
       form.reset();
