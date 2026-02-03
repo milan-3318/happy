@@ -1,0 +1,226 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #121a2f, #0b0f1a 60%);
+  color: #e5e7eb;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* =========================
+   CINEMATIC HERO
+========================= */
+.cinematic {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: radial-gradient(circle at center, #131a2a, #0b0f1a 70%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: cinematicExit 6s ease forwards;
+}
+
+.cinematic h1 {
+  font-size: 4rem;
+  background: linear-gradient(90deg, #4f8cff, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  animation: titleIn 2s ease forwards;
+}
+
+.cinematic p {
+  margin-top: 14px;
+  font-size: 1.2rem;
+  opacity: 0;
+  animation: subtitleIn 2s ease forwards;
+  animation-delay: 1.2s;
+}
+
+@keyframes titleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+    letter-spacing: 20px;
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    letter-spacing: 2px;
+  }
+}
+
+@keyframes subtitleIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 0.85;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cinematicExit {
+  0%, 70% { opacity: 1; }
+  100% {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* =========================
+   SECTIONS
+========================= */
+.section {
+  padding: 80px 10%;
+  animation: breathe 6s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+.section h2::after {
+  content: "";
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #4f8cff, #22d3ee);
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  transition: width 0.6s ease;
+}
+
+.section:hover h2::after {
+  width: 100%;
+}
+
+/* =========================
+   SKILLS
+========================= */
+.skills span {
+  display: inline-block;
+  margin: 8px;
+  padding: 10px 18px;
+  background: #131a2a;
+  border-radius: 20px;
+  border: 1px solid rgba(79,140,255,0.2);
+  transition: all 0.3s ease;
+}
+
+.skills span:hover {
+  transform: translateY(-6px) scale(1.05);
+  background: rgba(79,140,255,0.15);
+  box-shadow: 0 0 15px rgba(79,140,255,0.4);
+}
+
+/* =========================
+   PROJECTS
+========================= */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: #131a2a;
+  padding: 22px;
+  border-radius: 12px;
+  transition: all 0.35s ease;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 10px 40px rgba(79,140,255,0.25);
+}
+
+/* =========================
+   SUGGESTION FORM
+========================= */
+.suggestion-form {
+  max-width: 420px;
+  margin-top: 25px;
+}
+
+.suggestion-form input,
+.suggestion-form textarea {
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 12px;
+  background: #131a2a;
+  border: 1px solid rgba(79,140,255,0.3);
+  color: #e5e7eb;
+  border-radius: 6px;
+}
+
+.suggestion-form textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+.suggestion-form input:focus,
+.suggestion-form textarea:focus {
+  box-shadow: 0 0 12px rgba(79,140,255,0.4);
+}
+
+.suggestion-form button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #4f8cff, #22d3ee);
+  border: none;
+  color: #0b0f1a;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.suggestion-form button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(79,140,255,0.5);
+}
+
+/* =========================
+   REVEAL ANIMATION
+========================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .cinematic h1 {
+    font-size: 2.6rem;
+  }
+
+  .section {
+    padding: 60px 6%;
+  }
+}
